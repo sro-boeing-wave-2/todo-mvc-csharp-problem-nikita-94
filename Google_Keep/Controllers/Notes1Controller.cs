@@ -9,7 +9,7 @@ using Google_Keep.Models;
 
 namespace Google_Keep.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Notes1")]
     [ApiController]
     public class Notes1Controller : ControllerBase
     {
@@ -20,34 +20,41 @@ namespace Google_Keep.Controllers
             _context = context;
         }
 
-        // GET: api/Notes1
         [HttpGet]
-        public IEnumerable<Notes> GetNotes()
+        public async Task<IActionResult> GetNotes([FromQuery] string title, [FromQuery] string label, [FromQuery] bool? pinned)
         {
-            return _context.Notes.Include(n=>n.check).Include(n=>n.label);
+            var result = await _context.Notes.Include(n => n.check).Include(n => n.label)
+                .Where(x => ((title == null || x.title == title) && (label == null || x.label.Exists(y => y.label == label)) && (pinned == null || x.IsPinned == pinned))).ToListAsync();
+            return Ok(result);
         }
+        // GET: api/Notes1
+        //[HttpGet]
+        //public IEnumerable<Notes> GetNotes()
+        //{
+        //    return _context.Notes.Include(n=>n.check).Include(n=>n.label);
+        //}
 
-        // GET: api/Notes1/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetNotes([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //// GET: api/Notes1/5
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetNotes([FromRoute] int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var notes = await _context.Notes.FindAsync(id);
+        //    var notes = await _context.Notes.FindAsync(id);
 
-            if (notes == null)
-            {
-                return NotFound();
-            }
+        //    if (notes == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(notes);
-        }
+        //    return Ok(notes);
+        //}
 
         // PUT: api/Notes1/5
-        [HttpPut("{id}")]
+        [HttpPut("EDIT/{id}")]
         public async Task<IActionResult> PutNotes([FromRoute] int id, [FromBody] Notes notes)
         {
             if (!ModelState.IsValid)
@@ -60,11 +67,16 @@ namespace Google_Keep.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(notes).State = EntityState.Modified;
-
+            _context.Notes.Update(notes);
+           // _context.Entry(notes).State = EntityState.Modified;
+            // using(var entity= new NotesDBEntities)
+           
             try
             {
                 await _context.SaveChangesAsync();
+
+                //using(var db=new MyContextDB())
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -78,7 +90,7 @@ namespace Google_Keep.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(notes);
         }
 
         // POST: api/Notes1
@@ -105,7 +117,7 @@ namespace Google_Keep.Controllers
                 return BadRequest(ModelState);
             }
 
-            var notes = await _context.Notes.FindAsync(id);
+            var notes = await _context.Notes.Include(n=>n.check).Include(n=>n.label).SingleOrDefaultAsync(c=>c.id==id);
             if (notes == null)
             {
                 return NotFound();
@@ -115,6 +127,29 @@ namespace Google_Keep.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(notes);
+        }
+        [HttpDelete("DEL/{title}")]
+        public async Task<IActionResult> Delete([FromRoute] string title)
+        {
+            //DbContext db = new DbContext();
+            //Notes n = db.notes.Single(p => p.title == title); // Find the item to remove
+
+            //db.notes.Remove(n); // Remove from the context
+
+            //db.SaveChanges();
+            _context.Entry(title).State = EntityState.Deleted;
+
+            //DatabaseEntities obj = new DatabaseEntities();
+            //obj.notes.Where(x => x.title == title).ToList().ForEach(obj.notes.DeleteObject);
+            //obj.SaveChanges();
+            //_context.Notes.Include(n => n.check).Include(n => n.label).Where(w => w.title == title).Remove();
+
+            //_context.Notes.Where(p => p.title == title)
+            //   .ToList().ForEach(p => _context.check.Remove(p));
+           // _context.Notes.Update();
+            await _context.SaveChangesAsync();
+            
+            return Ok();
         }
 
         private bool NotesExists(int id)

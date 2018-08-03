@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using Google_Keep.Models;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Google_Keep
 {
@@ -31,11 +32,16 @@ namespace Google_Keep
 
             services.AddDbContext<Google_KeepContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Google_KeepContext")));
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseSwagger();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -44,7 +50,10 @@ namespace Google_Keep
             {
                 app.UseHsts();
             }
-
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }
