@@ -27,6 +27,12 @@ namespace Google_Keep.Controllers
                 .Where(x => ((title == null || x.title == title) && (label == null || x.label.Exists(y => y.label == label)) && (pinned == null || x.IsPinned == pinned))).ToListAsync();
             return Ok(result);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAllNotes()
+        {
+            return Ok(_context.Notes.Include(n => n.check).Include(n => n.label).ToList());
+        }
+
         // GET: api/Notes1
         //[HttpGet]
         //public IEnumerable<Notes> GetNotes()
@@ -34,24 +40,24 @@ namespace Google_Keep.Controllers
         //    return _context.Notes.Include(n=>n.check).Include(n=>n.label);
         //}
 
-        //// GET: api/Notes1/5
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetNotes([FromRoute] int id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+        // GET: api/Notes1/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetNoteById([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    var notes = await _context.Notes.FindAsync(id);
+            var notes = await _context.Notes.FindAsync(id);
 
-        //    if (notes == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (notes == null)
+            {
+                return NotFound();
+            }
 
-        //    return Ok(notes);
-        //}
+            return Ok(notes);
+        }
 
         // PUT: api/Notes1/5
         [HttpPut("EDIT/{id}")]
@@ -78,7 +84,7 @@ namespace Google_Keep.Controllers
                 //using(var db=new MyContextDB())
 
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException e)
             {
                 if (!NotesExists(id))
                 {
@@ -105,7 +111,7 @@ namespace Google_Keep.Controllers
             _context.Notes.Add(notes);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetNotes", new { id = notes.id }, notes);
+            return CreatedAtAction("GetNotesByID", new { id = notes.id }, notes);
         }
 
         // DELETE: api/Notes1/5
@@ -137,7 +143,7 @@ namespace Google_Keep.Controllers
             //db.notes.Remove(n); // Remove from the context
 
             //db.SaveChanges();
-            _context.Entry(title).State = EntityState.Deleted;
+              _context.Entry(title).State = EntityState.Deleted;
 
             //DatabaseEntities obj = new DatabaseEntities();
             //obj.notes.Where(x => x.title == title).ToList().ForEach(obj.notes.DeleteObject);
@@ -146,7 +152,13 @@ namespace Google_Keep.Controllers
 
             //_context.Notes.Where(p => p.title == title)
             //   .ToList().ForEach(p => _context.check.Remove(p));
-           // _context.Notes.Update();
+            // _context.Notes.Update();
+            //using (var ctx = new Google_KeepContext())
+            //{
+            //    var list = _context.Notes.Where(x => ((title == null || x.title == title))).ToListAsync();
+            //    ctx.Notes.RemoveRange(list);
+            //    ctx.SaveChanges();
+            //}
             await _context.SaveChangesAsync();
             
             return Ok();
