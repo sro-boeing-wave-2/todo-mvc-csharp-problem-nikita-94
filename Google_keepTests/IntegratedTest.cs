@@ -20,11 +20,11 @@ namespace Google_keepTests
             //static Server<Startup> server;
             server = new Server("https://localhost:44367");
         }
-        [Fact]
-        public void Gettest()
-        {
-            server.Get("api/Notes1").Expect(200).End();
-        }
+       // [Fact]
+        //public void Gettest()
+        //{
+          //  server.Get("api/Notes1").Expect(200).End();
+        //}
     }
 
     public class TestContext
