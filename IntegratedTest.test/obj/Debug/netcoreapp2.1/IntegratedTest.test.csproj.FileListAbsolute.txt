@@ -1,0 +1,17 @@
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\IntegratedTest.test.deps.json
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\IntegratedTest.test.runtimeconfig.json
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\IntegratedTest.test.runtimeconfig.dev.json
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\IntegratedTest.test.dll
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\obj\Debug\netcoreapp2.1\IntegratedTest.test.csprojAssemblyReference.cache
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\obj\Debug\netcoreapp2.1\IntegratedTest.test.csproj.CoreCompileInputs.cache
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\obj\Debug\netcoreapp2.1\IntegratedTest.test.AssemblyInfoInputs.cache
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\obj\Debug\netcoreapp2.1\IntegratedTest.test.AssemblyInfo.cs
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\Google_Keep.dll
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\Google_Keep.pdb
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\obj\Debug\netcoreapp2.1\IntegratedTest.test.csproj.CopyComplete
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\bin\Debug\netcoreapp2.1\IntegratedTest.test.pdb
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\obj\Debug\netcoreapp2.1\IntegratedTest.test.dll
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\IntegratedTest.test\obj\Debug\netcoreapp2.1\IntegratedTest.test.pdb

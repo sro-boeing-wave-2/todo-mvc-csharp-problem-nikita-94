@@ -27,11 +27,14 @@ namespace Google_Keep.Controllers
                 .Where(x => ((title == null || x.title == title) && (label == null || x.label.Exists(y => y.label == label)) && (pinned == null || x.IsPinned == pinned))).ToListAsync();
             return Ok(result);
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAllNotes()
-        {
-            return Ok(_context.Notes.Include(n => n.check).Include(n => n.label).ToList());
-        }
+        //[Route("api/Notes1/GetAll")]
+        //[HttpGet]
+        //public async Task<IActionResult> GetAllNotes()
+        //{
+        //    var res=_context.Notes.Include(n => n.check).Include(n => n.label);
+        //    var reslist = await res.ToListAsync();
+        //    return Ok(reslist);
+        //}
 
         // GET: api/Notes1
         //[HttpGet]
