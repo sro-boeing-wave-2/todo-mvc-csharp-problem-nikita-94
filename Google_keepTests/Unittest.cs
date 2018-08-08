@@ -115,14 +115,14 @@ namespace ToDoAssignment.Tests
             Assert.Equal(1, OkObj.Count);
         }
 
-        [Fact]
-        public async void GetAllNotes()
-        {
-            var _controller = GetController();
-            var result = await _controller.GetAllNotes() as OkObjectResult;
-            var okobj = result.Value as List<Notes>;
-            Assert.Equal(3, okobj.Count);
-        }
+        //[Fact]
+        //public async void GetAllNotes()
+        //{
+        //    var _controller = GetController();
+        //    var result = await _controller.GetAllNotes() as OkObjectResult;
+        //    var okobj = result.Value as List<Notes>;
+        //    Assert.Equal(3, okobj.Count);
+        //}
         [Fact]
         public async Task PostNotes()
         {
