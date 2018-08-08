@@ -31,17 +31,17 @@ namespace Google_Keep.Controllers
         //[HttpGet]
         //public async Task<IActionResult> GetAllNotes()
         //{
-        //    var res=_context.Notes.Include(n => n.check).Include(n => n.label);
-        //    var reslist = await res.ToListAsync();
+        //    var res = _context.Notes.Include(n => n.check).Include(n => n.label);
+        //    var reslist = res.ToList();
         //    return Ok(reslist);
         //}
 
         // GET: api/Notes1
         //[HttpGet]
-        //public IEnumerable<Notes> GetNotes()
-        //{
-        //    return _context.Notes.Include(n=>n.check).Include(n=>n.label);
-        //}
+        // public IEnumerable<Notes> GetNotes()
+        // {
+        //     return _context.Notes.Include(n => n.check).Include(n => n.label);
+        // }
 
         // GET: api/Notes1/5
         [HttpGet("{id}")]

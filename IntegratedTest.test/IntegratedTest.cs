@@ -113,7 +113,7 @@ namespace Google_KeepIntegratedtest.test
         {
             // Act
             var response = await _client.GetAsync("api/Notes1");
-            
+
             // response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             var notes = JsonConvert.DeserializeObject<List<Notes>>(responseString);
@@ -141,30 +141,30 @@ namespace Google_KeepIntegratedtest.test
         [Fact]
         public async Task PostNotes()
         {
-                Notes note = new Notes()
+            Notes note = new Notes()
             {
-            // Arrange
-                
-                
-                    id =4,
-                    title = "My First Note",
-                    plain_text = "This is my plaintext",
-                    IsPinned = true,
-                    check = new List<Checklist>()
+                // Arrange
+
+
+                id = 4,
+                title = "My First Note",
+                plain_text = "This is my plaintext",
+                IsPinned = true,
+                check = new List<Checklist>()
                         {
                             new Checklist()
                             {
                                 checklist="checklist data 1"
                             }
                         },
-                    label = new List<Label>()
+                label = new List<Label>()
                         {
                             new Label()
                             {
                                 label ="Nikita"
                             }
                         }
-                
+
             };
 
             var content = JsonConvert.SerializeObject(note);
@@ -208,7 +208,7 @@ namespace Google_KeepIntegratedtest.test
 
             // Act
             var response = await _client.PutAsync("api/Notes1/EDIT/3", stringContent);
-            var responseStringt =  await response.Content.ReadAsStringAsync();
+            var responseStringt = await response.Content.ReadAsStringAsync();
             var notest = JsonConvert.DeserializeObject<Notes>(responseStringt);
             var responsebyget = await _client.GetAsync("api/Notes1/3");
             var responseString = await responsebyget.Content.ReadAsStringAsync();
