@@ -140,13 +140,25 @@ namespace Google_Keep.Controllers
         [HttpDelete("DEL/{title}")]
         public async Task<IActionResult> Delete([FromRoute] string title)
         {
+            //var result = await _context.Notes.Include(n => n.check).Include(n => n.label)
+            //   .Where(x => ((title == null || x.plain_text == title) && 
+            //   (Label == null || x.label.Any(y => y.label == Label)) && 
+            //   (pinned == null || x.pinned == pinned))).ToListAsync();
+            var result = await _context.Notes.Include(n => n.check).Include(n => n.label)
+                .Where(x => ((title == null || x.title == title))).ToListAsync();
+            foreach (var note in result)
+            {
+                _context.Notes.Remove(note);
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
             //DbContext db = new DbContext();
             //Notes n = db.notes.Single(p => p.title == title); // Find the item to remove
 
             //db.notes.Remove(n); // Remove from the context
 
             //db.SaveChanges();
-              _context.Entry(title).State = EntityState.Deleted;
+            //  _context.Entry(title).State = EntityState.Deleted;
 
             //DatabaseEntities obj = new DatabaseEntities();
             //obj.notes.Where(x => x.title == title).ToList().ForEach(obj.notes.DeleteObject);
@@ -162,9 +174,6 @@ namespace Google_Keep.Controllers
             //    ctx.Notes.RemoveRange(list);
             //    ctx.SaveChanges();
             //}
-            await _context.SaveChangesAsync();
-            
-            return Ok();
         }
 
         private bool NotesExists(int id)

@@ -170,10 +170,37 @@ namespace Google_KeepIntegratedtest.test
             var content = JsonConvert.SerializeObject(note);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
             var response = await _client.PostAsync("api/Notes1", stringContent);
-            //  response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             var notes = JsonConvert.DeserializeObject<Notes>(responseString);
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        }
+        [Fact]
+        public async Task PostInvalid()
+        {
+            // Arrange
+            var notes = new Notes { title = "John" };
+            var content = JsonConvert.SerializeObject(notes);
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+            // Act
+            var response = await _client.PostAsync("/api/Notes1", stringContent);
+            // Assert
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+        [Fact]
+        public async Task PutInvalid()
+        {
+            // Arrange
+            var notes = new Notes { title = "John" };
+            var content = JsonConvert.SerializeObject(notes);
+            var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await _client.PutAsync("/api/Notes1/16", stringContent);
+
+            // Assert
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+            var responseString = await response.Content.ReadAsStringAsync();
         }
         [Fact]
         public async Task PutNotes()
@@ -224,7 +251,7 @@ namespace Google_KeepIntegratedtest.test
             var response = await _client.DeleteAsync("api/Notes1/2");
 
             // Assert
-            // response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
             var responsenote = JsonConvert.DeserializeObject<Notes>(responseString);
             //responseString.Should().Be(String.Empty);
