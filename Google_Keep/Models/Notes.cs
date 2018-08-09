@@ -11,7 +11,7 @@ namespace Google_Keep.Models
         public string title { get; set; }
         public string plain_text { get; set; }
         public bool IsPinned { get; set; }
-        public List<Label> labels { get; set; }
+        public List<Label> label { get; set; }
         public List<Checklist> checks { get; set; }
     }
     public class Checklist

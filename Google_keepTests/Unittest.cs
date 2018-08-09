@@ -30,15 +30,15 @@ namespace ToDoAssignment.Tests
         {
             using (var g_keep_context = new Google_KeepContext(options))
             {
-                var notes = new List<Notes>()
+                var note = new List<Note>()
             {
-                new Notes()
+                new Note()
                 {
                     id = 1,
                     title="My First Note",
                     plain_text="This is my plaintext",
                     IsPinned=true,
-                    check=new List<Checklist>()
+                    checks=new List<Checklist>()
                     {
                         new Checklist()
                         {
@@ -54,13 +54,13 @@ namespace ToDoAssignment.Tests
                         }
                     }
                 },
-                new Notes()
+                new Note()
                 {
                     id = 2,
                     title="My First Note2",
                     plain_text="This is my plaintext2",
                     IsPinned=true,
-                    check=new List<Checklist>()
+                    checks=new List<Checklist>()
                     {
                         new Checklist()
                         {
@@ -76,13 +76,13 @@ namespace ToDoAssignment.Tests
                         }
                     }
                 },
-                 new Notes()
+                 new Note()
                 {
                     id = 3,
                     title="My First Note3",
                     plain_text="This is my plaintext3",
                     IsPinned=true,
-                    check=new List<Checklist>()
+                    checks=new List<Checklist>()
                     {
                         new Checklist()
                         {
@@ -99,7 +99,7 @@ namespace ToDoAssignment.Tests
                     }
                 }
             };
-                g_keep_context.Notes.AddRange(notes);
+                g_keep_context.Note.AddRange(note);
                 var CountOfEntitiesBeingTracked = g_keep_context.ChangeTracker.Entries().Count();
                 g_keep_context.SaveChanges();
 
@@ -110,7 +110,7 @@ namespace ToDoAssignment.Tests
         {
             var _controller = GetController();
             var res = await _controller.GetNotes("My First Note", "Nikita", true) as OkObjectResult;
-            var OkObj = res.Value as List<Notes>;
+            var OkObj = res.Value as List<Note>;
             Console.WriteLine(OkObj.Count);
             Assert.Equal(1, OkObj.Count);
         }
@@ -126,14 +126,14 @@ namespace ToDoAssignment.Tests
         [Fact]
         public async Task PostNotes()
         {
-            var note = new Notes
+            var note = new Note
             {
                 id = 5,
                 title = "Asp",
                 plain_text = "Hello eWorld",
                 IsPinned = true,
                 label = new List<Label>() { new Label { label = "Label_1" }, new Label { label = "Label_2" } },
-                check = new List<Checklist>() { new Checklist { checklist = "1" } }
+                checks = new List<Checklist>() { new Checklist { checklist = "1" } }
 
             };
             var _controller = GetController();
@@ -141,27 +141,27 @@ namespace ToDoAssignment.Tests
             //Console.WriteLine("posted result"+result);
             //var okResult = result.Should().BeOfType<CreatedAtActionResult>().Subject;
             //var notes = okResult.Value.Should().BeAssignableTo<Notes>().Subject;
-            var item = result.Value as Notes;
+            var item = result.Value as Note;
             Assert.Equal("Hello eWorld", item.plain_text);
 
         }
         [Fact]
         public async Task TestPut()
         {
-            var notes = new Notes
+            var note = new Note
             {
                 id = 2,
                 title = "Asp",
                 plain_text = "Hello World",
                 IsPinned = true,
                 label = new List<Label>() { new Label { label = "Label_1" } },
-                check = new List<Checklist>() { new Checklist { checklist = "1" } }
+                checks = new List<Checklist>() { new Checklist { checklist = "1" } }
             };
 
             var _controller = GetController();
-            var result = await _controller.PutNotes(2, notes);
+            var result = await _controller.PutNotes(2, note);
             var resultAsOkObjectResult = result as OkObjectResult;
-            var okResult = resultAsOkObjectResult.Value as Notes;
+            var okResult = resultAsOkObjectResult.Value as Note;
             Assert.Equal(2, okResult.id);
             // var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
             Assert.Equal("Hello World", okResult.plain_text);

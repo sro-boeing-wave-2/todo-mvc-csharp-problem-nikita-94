@@ -23,7 +23,7 @@ namespace Google_Keep.Controllers
         [HttpGet]
         public async Task<IActionResult> GetNotes([FromQuery] string title, [FromQuery] string label, [FromQuery] bool? pinned)
         {
-            var result = await _context.Note.Include(n => n.check).Include(n => n.label)
+            var result = await _context.Note.Include(n => n.checks).Include(n => n.label)
                 .Where(x => ((title == null || x.title == title) && (label == null || x.label.Exists(y => y.label == label)) && (pinned == null || x.IsPinned == pinned))).ToListAsync();
             return Ok(result);
         }
@@ -31,7 +31,7 @@ namespace Google_Keep.Controllers
         //[HttpGet]
         //public async Task<IActionResult> GetAllNotes()
         //{
-        //    var res = _context.Notes.Include(n => n.check).Include(n => n.label);
+        //    var res = _context.Notes.Include(n => n.checks).Include(n => n.label);
         //    var reslist = res.ToList();
         //    return Ok(reslist);
         //}
@@ -40,7 +40,7 @@ namespace Google_Keep.Controllers
         //[HttpGet]
         // public IEnumerable<Notes> GetNotes()
         // {
-        //     return _context.Notes.Include(n => n.check).Include(n => n.label);
+        //     return _context.Notes.Include(n => n.checks).Include(n => n.label);
         // }
 
         // GET: api/Notes1/5
@@ -89,7 +89,7 @@ namespace Google_Keep.Controllers
             }
             catch (DbUpdateConcurrencyException e)
             {
-                if (!NotesExists(id))
+                if (!NoteExists(id))
                 {
                     return NotFound();
                 }
@@ -126,7 +126,7 @@ namespace Google_Keep.Controllers
                 return BadRequest(ModelState);
             }
 
-            var notes = await _context.Note.Include(n=>n.check).Include(n=>n.label).SingleOrDefaultAsync(c=>c.id==id);
+            var notes = await _context.Note.Include(n=>n.checks).Include(n=>n.label).SingleOrDefaultAsync(c=>c.id==id);
             if (notes == null)
             {
                 return NotFound();
@@ -140,11 +140,11 @@ namespace Google_Keep.Controllers
         [HttpDelete("DEL/{title}")]
         public async Task<IActionResult> Delete([FromRoute] string title)
         {
-            //var result = await _context.Notes.Include(n => n.check).Include(n => n.label)
+            //var result = await _context.Notes.Include(n => n.checks).Include(n => n.label)
             //   .Where(x => ((title == null || x.plain_text == title) && 
             //   (Label == null || x.label.Any(y => y.label == Label)) && 
             //   (pinned == null || x.pinned == pinned))).ToListAsync();
-            var result = await _context.Note.Include(n => n.check).Include(n => n.label)
+            var result = await _context.Note.Include(n => n.checks).Include(n => n.label)
                 .Where(x => ((title == null || x.title == title))).ToListAsync();
             foreach (var note in result)
             {
@@ -163,10 +163,10 @@ namespace Google_Keep.Controllers
             //DatabaseEntities obj = new DatabaseEntities();
             //obj.notes.Where(x => x.title == title).ToList().ForEach(obj.notes.DeleteObject);
             //obj.SaveChanges();
-            //_context.Notes.Include(n => n.check).Include(n => n.label).Where(w => w.title == title).Remove();
+            //_context.Notes.Include(n => n.checks).Include(n => n.label).Where(w => w.title == title).Remove();
 
             //_context.Notes.Where(p => p.title == title)
-            //   .ToList().ForEach(p => _context.check.Remove(p));
+            //   .ToList().ForEach(p => _context.checks.Remove(p));
             // _context.Notes.Update();
             //using (var ctx = new Google_KeepContext())
             //{

@@ -37,15 +37,15 @@ namespace Google_KeepIntegratedtest.test
             _client.DefaultRequestHeaders.Accept.Clear();
             _context = _server.Host.Services.GetService(typeof(Google_KeepContext)) as Google_KeepContext;
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            List<Notes> note = new List<Notes>
+            List<Note> note = new List<Note>
             {
-                new Notes
+                new Note
                 {
                     id = 1,
                     title = "My First Note",
                     plain_text = "This is my plaintext",
                     IsPinned = true,
-                    check = new List<Checklist>()
+                    checks = new List<Checklist>()
                         {
                         new Checklist()
                         {
@@ -60,13 +60,13 @@ namespace Google_KeepIntegratedtest.test
                         }
                     }
                 },
-                new Notes
+                new Note
                 {
                     id = 2,
                     title = "My First Note1",
                     plain_text = "This is my plaintext1",
                     IsPinned = true,
-                    check = new List<Checklist>()
+                    checks = new List<Checklist>()
                     {
                         new Checklist()
                         {
@@ -81,13 +81,13 @@ namespace Google_KeepIntegratedtest.test
                         }
                     }
                 },
-                new Notes
+                new Note
                 {
                     id = 3,
                     title = "My First Note2",
                 plain_text = "This is my plaintext2",
                 IsPinned = true,
-                check = new List<Checklist>()
+                checks = new List<Checklist>()
                     {
                         new Checklist()
                         {
@@ -103,7 +103,7 @@ namespace Google_KeepIntegratedtest.test
                     }
                 }
             };
-            _context.Notes.AddRange(note);
+            _context.Note.AddRange(note);
             _context.SaveChanges();
 
 
@@ -116,10 +116,10 @@ namespace Google_KeepIntegratedtest.test
 
             // response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
-            var notes = JsonConvert.DeserializeObject<List<Notes>>(responseString);
+            var note = JsonConvert.DeserializeObject<List<Note>>(responseString);
             //   notes.Count().Should().Be(3);
             //var okobj = notes.Value as List<Notes>;
-            Assert.Equal(3, notes.Count());
+            Assert.Equal(3, note.Count());
 
             // Assert
         }
@@ -133,15 +133,15 @@ namespace Google_KeepIntegratedtest.test
             // Assert
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
-            var notes = JsonConvert.DeserializeObject<Notes>(responseString);
+            var note = JsonConvert.DeserializeObject<Note>(responseString);
 
-            notes.id.Should().Be(2);
+            note.id.Should().Be(2);
         }
 
         [Fact]
         public async Task PostNotes()
         {
-            Notes note = new Notes()
+            Note note = new Note()
             {
                 // Arrange
 
@@ -150,7 +150,7 @@ namespace Google_KeepIntegratedtest.test
                 title = "My First Note",
                 plain_text = "This is my plaintext",
                 IsPinned = true,
-                check = new List<Checklist>()
+                checks = new List<Checklist>()
                         {
                             new Checklist()
                             {
@@ -172,15 +172,15 @@ namespace Google_KeepIntegratedtest.test
             var response = await _client.PostAsync("api/Notes1", stringContent);
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
-            var notes = JsonConvert.DeserializeObject<Notes>(responseString);
+            var notetopost = JsonConvert.DeserializeObject<Note>(responseString);
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         }
         [Fact]
         public async Task PostInvalid()
         {
             // Arrange
-            var notes = new Notes { title = "John" };
-            var content = JsonConvert.SerializeObject(notes);
+            var note = new Note { title = "John" };
+            var content = JsonConvert.SerializeObject(note);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
             // Act
             var response = await _client.PostAsync("/api/Notes1", stringContent);
@@ -191,8 +191,8 @@ namespace Google_KeepIntegratedtest.test
         public async Task PutInvalid()
         {
             // Arrange
-            var notes = new Notes { title = "John" };
-            var content = JsonConvert.SerializeObject(notes);
+            var note = new Note { title = "John" };
+            var content = JsonConvert.SerializeObject(note);
             var stringContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             // Act
@@ -206,15 +206,15 @@ namespace Google_KeepIntegratedtest.test
         public async Task PutNotes()
         {
             // Arrange
-            List<Notes> note = new List<Notes>
+            List<Note> note = new List<Note>
             {
-                new Notes
+                new Note
                 {
                 id = 3,
                 title = "John",
                 plain_text = "Doe",
                 IsPinned = false,
-                check = new List<Checklist>()
+                checks = new List<Checklist>()
                     {
                         new Checklist()
                         {
@@ -235,11 +235,11 @@ namespace Google_KeepIntegratedtest.test
 
             // Act
             var response = await _client.PutAsync("api/Notes1/EDIT/3", stringContent);
-            var responseStringt = await response.Content.ReadAsStringAsync();
-            var notest = JsonConvert.DeserializeObject<Notes>(responseStringt);
+            var responseStringbyput = await response.Content.ReadAsStringAsync();
+            var notebyput = JsonConvert.DeserializeObject<Note>(responseStringbyput);
             var responsebyget = await _client.GetAsync("api/Notes1/3");
-            var responseString = await responsebyget.Content.ReadAsStringAsync();
-            var notes = JsonConvert.DeserializeObject<Notes>(responseString);
+            var responseStringbyget = await responsebyget.Content.ReadAsStringAsync();
+            var notebyget = JsonConvert.DeserializeObject<Note>(responseStringbyget);
             // Assert.Equal(notes.title, "John");
             //  responseString.Should().Be(String.Empty);
         }
@@ -253,7 +253,7 @@ namespace Google_KeepIntegratedtest.test
             // Assert
             response.EnsureSuccessStatusCode();
             var responseString = await response.Content.ReadAsStringAsync();
-            var responsenote = JsonConvert.DeserializeObject<Notes>(responseString);
+            var responsenote = JsonConvert.DeserializeObject<Note>(responseString);
             //responseString.Should().Be(String.Empty);
             Assert.Equal(responsenote.id, 2);
         }

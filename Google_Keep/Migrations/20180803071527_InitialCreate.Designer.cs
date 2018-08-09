@@ -20,7 +20,7 @@ namespace Google_Keep.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Google_Keep.Models.Notes", b =>
+            modelBuilder.Entity("Google_Keep.Models.Note", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -34,7 +34,7 @@ namespace Google_Keep.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Notes");
+                    b.ToTable("Note");
                 });
 #pragma warning restore 612, 618
         }

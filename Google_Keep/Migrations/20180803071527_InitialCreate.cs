@@ -8,7 +8,7 @@ namespace Google_Keep.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Notes",
+                name: "Note",
                 columns: table => new
                 {
                     id = table.Column<int>(nullable: false)
@@ -19,14 +19,14 @@ namespace Google_Keep.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Notes", x => x.id);
+                    table.PrimaryKey("PK_Note", x => x.id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Notes");
+                name: "Note");
         }
     }
 }
