@@ -23,7 +23,7 @@ namespace Google_Keep.Controllers
         [HttpGet]
         public async Task<IActionResult> GetNotes([FromQuery] string title, [FromQuery] string label, [FromQuery] bool? pinned)
         {
-            var result = await _context.Notes.Include(n => n.check).Include(n => n.label)
+            var result = await _context.Note.Include(n => n.check).Include(n => n.label)
                 .Where(x => ((title == null || x.title == title) && (label == null || x.label.Exists(y => y.label == label)) && (pinned == null || x.IsPinned == pinned))).ToListAsync();
             return Ok(result);
         }
@@ -52,7 +52,7 @@ namespace Google_Keep.Controllers
                 return BadRequest(ModelState);
             }
 
-            var notes = await _context.Notes.FindAsync(id);
+            var notes = await _context.Note.FindAsync(id);
 
             if (notes == null)
             {
@@ -64,7 +64,7 @@ namespace Google_Keep.Controllers
 
         // PUT: api/Notes1/5
         [HttpPut("EDIT/{id}")]
-        public async Task<IActionResult> PutNotes([FromRoute] int id, [FromBody] Notes notes)
+        public async Task<IActionResult> PutNotes([FromRoute] int id, [FromBody] Note notes)
         {
             if (!ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace Google_Keep.Controllers
                 return BadRequest();
             }
 
-            _context.Notes.Update(notes);
+            _context.Note.Update(notes);
            // _context.Entry(notes).State = EntityState.Modified;
             // using(var entity= new NotesDBEntities)
            
@@ -104,14 +104,14 @@ namespace Google_Keep.Controllers
 
         // POST: api/Notes1
         [HttpPost]
-        public async Task<IActionResult> PostNotes([FromBody] Notes notes)
+        public async Task<IActionResult> PostNotes([FromBody] Note notes)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Notes.Add(notes);
+            _context.Note.Add(notes);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetNotesByID", new { id = notes.id }, notes);
@@ -126,13 +126,13 @@ namespace Google_Keep.Controllers
                 return BadRequest(ModelState);
             }
 
-            var notes = await _context.Notes.Include(n=>n.check).Include(n=>n.label).SingleOrDefaultAsync(c=>c.id==id);
+            var notes = await _context.Note.Include(n=>n.check).Include(n=>n.label).SingleOrDefaultAsync(c=>c.id==id);
             if (notes == null)
             {
                 return NotFound();
             }
 
-            _context.Notes.Remove(notes);
+            _context.Note.Remove(notes);
             await _context.SaveChangesAsync();
 
             return Ok(notes);
@@ -144,11 +144,11 @@ namespace Google_Keep.Controllers
             //   .Where(x => ((title == null || x.plain_text == title) && 
             //   (Label == null || x.label.Any(y => y.label == Label)) && 
             //   (pinned == null || x.pinned == pinned))).ToListAsync();
-            var result = await _context.Notes.Include(n => n.check).Include(n => n.label)
+            var result = await _context.Note.Include(n => n.check).Include(n => n.label)
                 .Where(x => ((title == null || x.title == title))).ToListAsync();
             foreach (var note in result)
             {
-                _context.Notes.Remove(note);
+                _context.Note.Remove(note);
             }
             await _context.SaveChangesAsync();
             return Ok();
@@ -176,9 +176,9 @@ namespace Google_Keep.Controllers
             //}
         }
 
-        private bool NotesExists(int id)
+        private bool NoteExists(int id)
         {
-            return _context.Notes.Any(e => e.id == id);
+            return _context.Note.Any(e => e.id == id);
         }
     }
 }
