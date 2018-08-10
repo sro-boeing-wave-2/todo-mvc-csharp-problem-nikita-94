@@ -8,6 +8,6 @@ notifications:
 mono: none
 dotnet: 2.1
 script:
-  - dotnet restore Google_keep
+  - dotnet restore Google_Keep
   - dotnet test Google_keepTests/
   - dotnet test IntegratedTest.test/
