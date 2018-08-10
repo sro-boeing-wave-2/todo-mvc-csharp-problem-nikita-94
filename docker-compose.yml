@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  google_keep:
+    image: ${DOCKER_REGISTRY}googlekeep
+    build:
+      context: .
+      dockerfile: Google_Keep\Dockerfile
