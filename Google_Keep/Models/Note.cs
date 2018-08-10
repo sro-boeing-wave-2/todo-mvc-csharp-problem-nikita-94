@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Google_Keep.Models
 {
+    [Table("Notes")]
     public class Note
     {
         public int id { get; set; }

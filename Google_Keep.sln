@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google_Keep", "Google_Keep\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Google_keepTests", "Google_keepTests\Google_keepTests.csproj", "{25890A06-F16C-45E1-B2CF-23FC7C6561A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegratedTest.test", "IntegratedTest.test\IntegratedTest.test.csproj", "{B7D5AAF8-6F0A-4369-99DF-AC83D420F7F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegratedTest.test", "IntegratedTest.test\IntegratedTest.test.csproj", "{B7D5AAF8-6F0A-4369-99DF-AC83D420F7F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

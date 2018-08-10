@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Google_Keep",
-    "\\Google_Keep\\Controllers",
-    "\\Google_Keep\\Models"
+    "\\Google_Keep"
   ],
-  "SelectedNode": "\\Google_Keep\\Controllers\\Notes1Controller.cs",
+  "SelectedNode": "\\IntegratedTest.test",
   "PreviewInSolutionExplorer": false
 }

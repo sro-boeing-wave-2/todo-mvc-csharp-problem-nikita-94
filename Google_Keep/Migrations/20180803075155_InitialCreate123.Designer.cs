@@ -55,7 +55,7 @@ namespace Google_Keep.Migrations
                     b.ToTable("Label");
                 });
 
-            modelBuilder.Entity("Google_Keep.Models.Notes", b =>
+            modelBuilder.Entity("Google_Keep.Models.Note", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -69,19 +69,19 @@ namespace Google_Keep.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Notes");
+                    b.ToTable("Note");
                 });
 
             modelBuilder.Entity("Google_Keep.Models.Checklist", b =>
                 {
-                    b.HasOne("Google_Keep.Models.Notes")
+                    b.HasOne("Google_Keep.Models.Note")
                         .WithMany("check")
                         .HasForeignKey("Notesid");
                 });
 
             modelBuilder.Entity("Google_Keep.Models.Label", b =>
                 {
-                    b.HasOne("Google_Keep.Models.Notes")
+                    b.HasOne("Google_Keep.Models.Note")
                         .WithMany("label")
                         .HasForeignKey("Notesid");
                 });

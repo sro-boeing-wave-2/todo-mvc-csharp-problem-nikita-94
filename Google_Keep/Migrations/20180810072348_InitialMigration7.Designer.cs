@@ -4,14 +4,16 @@ using Google_Keep.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Google_Keep.Migrations
 {
     [DbContext(typeof(Google_KeepContext))]
-    partial class Google_KeepContextModelSnapshot : ModelSnapshot
+    [Migration("20180810072348_InitialMigration7")]
+    partial class InitialMigration7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

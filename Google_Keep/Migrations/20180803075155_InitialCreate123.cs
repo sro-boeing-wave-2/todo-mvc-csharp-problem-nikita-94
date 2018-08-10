@@ -22,7 +22,7 @@ namespace Google_Keep.Migrations
                     table.ForeignKey(
                         name: "FK_Checklist_Notes_Notesid",
                         column: x => x.Notesid,
-                        principalTable: "Notes",
+                        principalTable: "Note",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -42,7 +42,7 @@ namespace Google_Keep.Migrations
                     table.ForeignKey(
                         name: "FK_Label_Notes_Notesid",
                         column: x => x.Notesid,
-                        principalTable: "Notes",
+                        principalTable: "Note",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
