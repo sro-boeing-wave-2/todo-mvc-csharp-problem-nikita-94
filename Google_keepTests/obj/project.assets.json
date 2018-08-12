@@ -14127,11 +14127,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\Google_keepTests\\Google_keepTests.csproj",
+      "projectUniqueName": "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\Google_keepTests\\Google_keepTests.csproj",
       "projectName": "Google_keepTests",
-      "projectPath": "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\Google_keepTests\\Google_keepTests.csproj",
+      "projectPath": "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\Google_keepTests\\Google_keepTests.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\Google_keepTests\\obj\\",
+      "outputPath": "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\Google_keepTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14150,8 +14150,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\Google_Keep\\Google_Keep.csproj": {
-              "projectPath": "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\Google_Keep\\Google_Keep.csproj"
+            "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\Google_Keep\\Google_Keep.csproj": {
+              "projectPath": "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\Google_Keep\\Google_Keep.csproj"
             }
           }
         }
@@ -14186,7 +14186,6 @@
             "version": "[15.8.0, )"
           },
           "Microsoft.NETCore.App": {
-            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true

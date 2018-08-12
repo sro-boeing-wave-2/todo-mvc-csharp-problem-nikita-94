@@ -14027,11 +14027,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\IntegratedTest.test\\IntegratedTest.test.csproj",
+      "projectUniqueName": "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\IntegratedTest.test\\IntegratedTest.test.csproj",
       "projectName": "IntegratedTest.test",
-      "projectPath": "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\IntegratedTest.test\\IntegratedTest.test.csproj",
+      "projectPath": "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\IntegratedTest.test\\IntegratedTest.test.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\IntegratedTest.test\\obj\\",
+      "outputPath": "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\IntegratedTest.test\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14050,8 +14050,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\Google_Keep\\Google_Keep.csproj": {
-              "projectPath": "D:\\Workspace\\Asp.net\\todo-mvc-csharp-problem-nikita-94\\Google_Keep\\Google_Keep.csproj"
+            "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\Google_Keep\\Google_Keep.csproj": {
+              "projectPath": "D:\\Workspace\\todo-mvc-csharp-problem-nikita-94\\Google_Keep\\Google_Keep.csproj"
             }
           }
         }
@@ -14114,7 +14114,6 @@
             "version": "[15.8.0, )"
           },
           "Microsoft.NETCore.App": {
-            "suppressParent": "All",
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
