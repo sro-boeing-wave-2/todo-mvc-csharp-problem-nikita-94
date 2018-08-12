@@ -1,8 +1,13 @@
-version: '3.4'
-
+version: "3"
 services:
-  google_keep:
-    image: ${DOCKER_REGISTRY}googlekeep
-    build:
-      context: .
-      dockerfile: Google_Keep\Dockerfile
+    web:
+        build: Google_Keep/
+        ports:
+            - "8000:80"
+        depends_on:
+            - db
+    db:
+        image: "microsoft/mssql-server-linux"
+        environment:
+            SA_PASSWORD: "Your_password123"
+            ACCEPT_EULA: "Y"

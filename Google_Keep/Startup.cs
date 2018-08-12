@@ -48,7 +48,9 @@ namespace Google_Keep
                
 
                 services.AddDbContext<Google_KeepContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("Google_KeepContext")));
+                        options.UseSqlServer(Configuration.GetConnectionString("Google_KeepContext"), 
+                        dbOptions => dbOptions.EnableRetryOnFailure(maxRetryCount: 10, 
+                        maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null)));
                 
             }
             
@@ -60,7 +62,7 @@ namespace Google_Keep
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Google_KeepContext context)
         {
             app.UseSwagger();
             if (env.IsDevelopment())
@@ -87,6 +89,8 @@ namespace Google_Keep
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            context.Database.Migrate();
         }
     }
 }
