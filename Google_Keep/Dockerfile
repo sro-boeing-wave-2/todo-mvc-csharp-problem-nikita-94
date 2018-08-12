@@ -14,4 +14,4 @@ FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
 COPY --from=build-env /app/out .
 EXPOSE 80
-CMD ["dotnet", "Google_Keep.dll"]
+ENTRYPOINT ["dotnet", "Google_Keep.dll"]

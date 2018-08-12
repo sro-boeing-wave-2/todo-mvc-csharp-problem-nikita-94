@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Google_Keep.Models;
 using Microsoft.EntityFrameworkCore;
+using MongoDB.Bson;
+
 namespace Google_Keep.Controllers
 {
     [Route("api/Notes1")]
@@ -13,19 +15,72 @@ namespace Google_Keep.Controllers
     public class Notes1Controller : ControllerBase
     {
         private readonly Google_KeepContext _context;
+        DataAccess objds;
+        public Notes1Controller(DataAccess d)
+        {
+            objds = d;
+        }
 
         public Notes1Controller(Google_KeepContext context)
         {
             _context = context;
         }
 
+        // [HttpGet]
+        //public async Task<IActionResult> GetNotes([FromQuery] string title, [FromQuery] string label, [FromQuery] bool? pinned)
+        //{
+        //    var result = await _context.Note.Include(n => n.checks).Include(n => n.label)
+        //        .Where(x => ((title == null || x.title == title) && (label == null || x.label.Exists(y => y.label == label)) && (pinned == null || x.IsPinned == pinned))).ToListAsync();
+        //    return Ok(result);
+        //}
+
         [HttpGet]
-        public async Task<IActionResult> GetNotes([FromQuery] string title, [FromQuery] string label, [FromQuery] bool? pinned)
+        public IEnumerable<Note> Get()
         {
-            var result = await _context.Note.Include(n => n.checks).Include(n => n.label)
-                .Where(x => ((title == null || x.title == title) && (label == null || x.label.Exists(y => y.label == label)) && (pinned == null || x.IsPinned == pinned))).ToListAsync();
-            return Ok(result);
+            return objds.GetNotes();
         }
+        public IActionResult Get(string id)
+        {
+            var note = objds.GetNote(new ObjectId(id));
+            if (note == null)
+            {
+                return NotFound();
+            }
+            return new ObjectResult(note);
+        }
+        [HttpPost]
+        public IActionResult Post([FromBody]Note p)
+        {
+            objds.Create(p);
+            return new OkObjectResult(p);
+        }
+        [HttpPut("EDIT/{id}")]
+        public IActionResult Put(string id, [FromBody]Note p)
+        {
+            var recId = new ObjectId(id);
+            var note = objds.GetNote(recId);
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            objds.Update(recId, p);
+            return new OkResult();
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(string id)
+        {
+            var note = objds.GetNote(new ObjectId(id));
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            objds.Remove(note.id);
+            return new OkResult();
+        }
+
         //[Route("api/Notes1/GetAll")]
         //[HttpGet]
         //public async Task<IActionResult> GetAllNotes()
@@ -43,141 +98,141 @@ namespace Google_Keep.Controllers
         // }
 
         // GET: api/Notes1/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetNoteById([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetNoteById([FromRoute] int id)
+        //{
+        //if (!ModelState.IsValid)
+        //{
+        //    return BadRequest(ModelState);
+        //}
 
-            var notes = await _context.Note.FindAsync(id);
+        //var notes = await _context.Note.FindAsync(id);
 
-            if (notes == null)
-            {
-                return NotFound();
-            }
+        //if (notes == null)
+        //{
+        //    return NotFound();
+        //}
 
-            return Ok(notes);
-        }
+        //return Ok(notes);
+        // }
 
         // PUT: api/Notes1/5
-        [HttpPut("EDIT/{id}")]
-        public async Task<IActionResult> PutNotes([FromRoute] int id, [FromBody] Note notes)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpPut("EDIT/{id}")]
+        //public async Task<IActionResult> PutNotes([FromRoute] int id, [FromBody] Note notes)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            if (id != notes.id)
-            {
-                return BadRequest();
-            }
+        //    if (id != notes.id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Note.Update(notes);
-           // _context.Entry(notes).State = EntityState.Modified;
-            // using(var entity= new NotesDBEntities)
-           
-            try
-            {
-                await _context.SaveChangesAsync();
+        //    _context.Note.Update(notes);
+        //   // _context.Entry(notes).State = EntityState.Modified;
+        //    // using(var entity= new NotesDBEntities)
 
-                //using(var db=new MyContextDB())
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
 
-            }
-            catch (DbUpdateConcurrencyException e)
-            {
-                if (!NoteExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //        //using(var db=new MyContextDB())
 
-            return Ok(notes);
-        }
+        //    }
+        //    catch (DbUpdateConcurrencyException e)
+        //    {
+        //        if (!NoteExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-        // POST: api/Notes1
-        [HttpPost]
-        public async Task<IActionResult> PostNotes([FromBody] Note notes)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //    return Ok(notes);
+        //}
 
-            _context.Note.Add(notes);
-            await _context.SaveChangesAsync();
+        //// POST: api/Notes1
+        //[HttpPost]
+        //public async Task<IActionResult> PostNotes([FromBody] Note notes)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            return CreatedAtAction("GetNotesByID", new { id = notes.id }, notes);
-        }
+        //    _context.Note.Add(notes);
+        //    await _context.SaveChangesAsync();
 
-        // DELETE: api/Notes1/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNotes([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //    return CreatedAtAction("GetNotesByID", new { id = notes.id }, notes);
+        //}
 
-            var notes = await _context.Note.Include(n=>n.checks).Include(n=>n.label).SingleOrDefaultAsync(c=>c.id==id);
-            if (notes == null)
-            {
-                return NotFound();
-            }
+        //// DELETE: api/Notes1/5
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteNotes([FromRoute] int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            _context.Note.Remove(notes);
-            await _context.SaveChangesAsync();
+        //    var notes = await _context.Note.Include(n=>n.checks).Include(n=>n.label).SingleOrDefaultAsync(c=>c.id==id);
+        //    if (notes == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return Ok(notes);
-        }
-        [HttpDelete("DEL/{title}")]
-        public async Task<IActionResult> Delete([FromRoute] string title)
-        {
-            //var result = await _context.Notes.Include(n => n.checks).Include(n => n.label)
-            //   .Where(x => ((title == null || x.plain_text == title) && 
-            //   (Label == null || x.label.Any(y => y.label == Label)) && 
-            //   (pinned == null || x.pinned == pinned))).ToListAsync();
-            var result = await _context.Note.Include(n => n.checks).Include(n => n.label)
-                .Where(x => ((title == null || x.title == title))).ToListAsync();
-            foreach (var note in result)
-            {
-                _context.Note.Remove(note);
-            }
-            await _context.SaveChangesAsync();
-            return Ok();
-            //DbContext db = new DbContext();
-            //Notes n = db.notes.Single(p => p.title == title); // Find the item to remove
+        //    _context.Note.Remove(notes);
+        //    await _context.SaveChangesAsync();
 
-            //db.notes.Remove(n); // Remove from the context
+        //    return Ok(notes);
+        //}
+        //[HttpDelete("DEL/{title}")]
+        //public async Task<IActionResult> Delete([FromRoute] string title)
+        //{
+        //    //var result = await _context.Notes.Include(n => n.checks).Include(n => n.label)
+        //    //   .Where(x => ((title == null || x.plain_text == title) && 
+        //    //   (Label == null || x.label.Any(y => y.label == Label)) && 
+        //    //   (pinned == null || x.pinned == pinned))).ToListAsync();
+        //    var result = await _context.Note.Include(n => n.checks).Include(n => n.label)
+        //        .Where(x => ((title == null || x.title == title))).ToListAsync();
+        //    foreach (var note in result)
+        //    {
+        //        _context.Note.Remove(note);
+        //    }
+        //    await _context.SaveChangesAsync();
+        //    return Ok();
+        //    //DbContext db = new DbContext();
+        //    //Notes n = db.notes.Single(p => p.title == title); // Find the item to remove
 
-            //db.SaveChanges();
-            //  _context.Entry(title).State = EntityState.Deleted;
+        //    //db.notes.Remove(n); // Remove from the context
 
-            //DatabaseEntities obj = new DatabaseEntities();
-            //obj.notes.Where(x => x.title == title).ToList().ForEach(obj.notes.DeleteObject);
-            //obj.SaveChanges();
-            //_context.Notes.Include(n => n.checks).Include(n => n.label).Where(w => w.title == title).Remove();
+        //    //db.SaveChanges();
+        //    //  _context.Entry(title).State = EntityState.Deleted;
 
-            //_context.Notes.Where(p => p.title == title)
-            //   .ToList().ForEach(p => _context.checks.Remove(p));
-            // _context.Notes.Update();
-            //using (var ctx = new Google_KeepContext())
-            //{
-            //    var list = _context.Notes.Where(x => ((title == null || x.title == title))).ToListAsync();
-            //    ctx.Notes.RemoveRange(list);
-            //    ctx.SaveChanges();
-            //}
-        }
+        //    //DatabaseEntities obj = new DatabaseEntities();
+        //    //obj.notes.Where(x => x.title == title).ToList().ForEach(obj.notes.DeleteObject);
+        //    //obj.SaveChanges();
+        //    //_context.Notes.Include(n => n.checks).Include(n => n.label).Where(w => w.title == title).Remove();
 
-        private bool NoteExists(int id)
-        {
-            return _context.Note.Any(e => e.id == id);
-        }
+        //    //_context.Notes.Where(p => p.title == title)
+        //    //   .ToList().ForEach(p => _context.checks.Remove(p));
+        //    // _context.Notes.Update();
+        //    //using (var ctx = new Google_KeepContext())
+        //    //{
+        //    //    var list = _context.Notes.Where(x => ((title == null || x.title == title))).ToListAsync();
+        //    //    ctx.Notes.RemoveRange(list);
+        //    //    ctx.SaveChanges();
+        //    //}
+        //}
+
+        //private bool NoteExists(int id)
+        //{
+        //    return _context.Note.Any(e => e.id == id);
+        //}
     }
 }

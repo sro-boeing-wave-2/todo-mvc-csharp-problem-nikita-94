@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using MongoDB.Bson;
 using System.Threading.Tasks;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Google_Keep.Models
 {
     [Table("Notes")]
+    
     public class Note
     {
-        public int id { get; set; }
+        [BsonElement("_id")]
+        public ObjectId id { get; set; }
         public string title { get; set; }
         public string plain_text { get; set; }
         public bool IsPinned { get; set; }

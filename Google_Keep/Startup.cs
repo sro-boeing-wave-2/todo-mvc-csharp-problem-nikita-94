@@ -38,6 +38,8 @@ namespace Google_Keep
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<DataAccess>();
+            services.AddMvc();
             if (Environment.IsEnvironment("Testing"))
                 {
                     services.AddDbContext<Google_KeepContext>(options =>
@@ -64,7 +66,7 @@ namespace Google_Keep
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, Google_KeepContext context)
         {
-            app.UseSwagger();
+           // app.UseSwagger();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -89,8 +91,8 @@ namespace Google_Keep
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            if (!Environment.IsEnvironment("Testing"))
-            context.Database.Migrate();
+            //if (!Environment.IsEnvironment("Testing"))
+            //context.Database.Migrate();
         }
     }
 }

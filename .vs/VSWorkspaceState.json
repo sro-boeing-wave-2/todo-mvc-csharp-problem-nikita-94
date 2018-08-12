@@ -2,9 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\Google_Keep",
-    "\\Google_Keep\\Controllers",
-    "\\Google_Keep\\Models"
+    "\\Google_Keep\\bin\\Debug"
   ],
-  "SelectedNode": "\\Google_Keep\\Google_Keep.csproj.user",
+  "SelectedNode": "\\Google_Keep.sln",
   "PreviewInSolutionExplorer": false
 }
