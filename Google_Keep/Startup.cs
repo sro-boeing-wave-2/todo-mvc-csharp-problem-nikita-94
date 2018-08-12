@@ -89,7 +89,7 @@ namespace Google_Keep
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
+            if (!Environment.IsEnvironment("Testing"))
             context.Database.Migrate();
         }
     }

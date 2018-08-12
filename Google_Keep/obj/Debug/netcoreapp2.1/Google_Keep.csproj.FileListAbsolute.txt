@@ -11,3 +11,4 @@ D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\Google_Keep\obj\Debug\net
 D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\Google_Keep\obj\Debug\netcoreapp2.1\Google_Keep.RazorTargetAssemblyInfo.cache
 D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\Google_Keep\obj\Debug\netcoreapp2.1\Google_Keep.dll
 D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\Google_Keep\obj\Debug\netcoreapp2.1\Google_Keep.pdb
+D:\Workspace\Asp.net\todo-mvc-csharp-problem-nikita-94\Google_Keep\obj\Debug\netcoreapp2.1\Google_Keep.csprojAssemblyReference.cache
