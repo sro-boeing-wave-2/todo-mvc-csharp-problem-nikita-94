@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using Google_Keep.Models;
 
 namespace Google_Keep.Models
 {
@@ -16,7 +19,22 @@ namespace Google_Keep.Models
             : base(options)
         {
         }
+        private readonly IMongoDatabase _database = null;
 
-        public DbSet<Google_Keep.Models.Note> Note { get; set; }
+        public Google_KeepContext(IOptions<Settings> settings)
+        {
+            var client = new MongoClient(settings.Value.ConnectionString);
+            if (client != null)
+                _database = client.GetDatabase(settings.Value.Database);
+        }
+
+        public IMongoCollection<Note> Note
+        {
+            get
+            {
+                return _database.GetCollection<Note>("Note");
+            }
+        }
+       // public DbSet<Google_Keep.Models.Note> Note { get; set; }
     }
 }

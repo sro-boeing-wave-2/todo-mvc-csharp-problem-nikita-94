@@ -39,34 +39,44 @@ namespace Google_Keep
             //});
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<DataAccess>();
-            services.AddMvc();
+            //services.AddMvc();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+            services.Configure<Settings>(options =>
+            {
+                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
+            });
+
+            //services.AddTransient<INoteRepository, NoteRepository>();
             if (Environment.IsEnvironment("Testing"))
-                {
-                    services.AddDbContext<Google_KeepContext>(options =>
-                        options.UseInMemoryDatabase("testDB"));
-                }
+            {
+                services.AddDbContext<Google_KeepContext>(options => options.UseInMemoryDatabase("testDB"));
+            }
             else
             {
-               
-
                 services.AddDbContext<Google_KeepContext>(options =>
-                        options.UseSqlServer(Configuration.GetConnectionString("Google_KeepContext"), 
-                        dbOptions => dbOptions.EnableRetryOnFailure(maxRetryCount: 10, 
-                        maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null)));
-                
+                    options.UseSqlServer(Configuration.GetConnectionString("Google_KeepContext"),
+                    dbOptions => dbOptions.EnableRetryOnFailure(maxRetryCount: 10,
+                    maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null)));
             }
-            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, Google_KeepContext context)
         {
-           // app.UseSwagger();
+            app.UseCors("CorsPolicy");
+            // app.UseSwagger();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -76,7 +86,6 @@ namespace Google_Keep
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
