@@ -76,24 +76,16 @@ namespace Google_Keep
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            //app.UseCookiePolicy();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
             //if (!Environment.IsEnvironment("Testing"))
             //context.Database.Migrate();
         }
     }
 }
-

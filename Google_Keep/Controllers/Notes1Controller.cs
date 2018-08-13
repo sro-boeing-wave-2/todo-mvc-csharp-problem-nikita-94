@@ -21,10 +21,10 @@ namespace Google_Keep.Controllers
             objds = d;
         }
 
-        public Notes1Controller(Google_KeepContext context)
-        {
-            _context = context;
-        }
+        //public Notes1Controller(Google_KeepContext context)
+        //{
+        //    _context = context;
+        //}
 
         // [HttpGet]
         //public async Task<IActionResult> GetNotes([FromQuery] string title, [FromQuery] string label, [FromQuery] bool? pinned)
@@ -39,6 +39,7 @@ namespace Google_Keep.Controllers
         {
             return objds.GetNotes();
         }
+
         public IActionResult Get(string id)
         {
             var note = objds.GetNote(new ObjectId(id));
@@ -48,6 +49,7 @@ namespace Google_Keep.Controllers
             }
             return new ObjectResult(note);
         }
+
         [HttpPost]
         public IActionResult Post([FromBody]Note p)
         {
